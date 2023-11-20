@@ -8,7 +8,7 @@ Tera templating engine. Drawing inspiration from renowned pre-processors like [c
 and [gpp](https://github.com/logological/gpp/), `tpp` stands out with its user-friendly command-line interface that 
 efficiently renders templates for diverse applications.
 
-Learn more about [Tera](https://crates.io/crates/tera)
+Learn more about [Tera](https://keats.github.io/tera/docs/)
 
 
 ## Example
