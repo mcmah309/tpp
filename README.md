@@ -4,14 +4,13 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
 `tpp` (Tera Pre-Processor) is a versatile CLI (Command Line Interface) tool crafted for preprocessing files using the 
-Tera templating engine. Drawing inspiration from renowned pre-processors like [cpp](https://linux.die.net/man/1/cpp) 
-and [gpp](https://github.com/logological/gpp/), `tpp` stands out with its user-friendly command-line interface that 
-efficiently renders templates for diverse applications.
+Tera templating engine. Drawing inspiration from pre-processors like [cpp](https://linux.die.net/man/1/cpp) 
+and [gpp](https://github.com/logological/gpp/), `tpp` is the next evolution with its powerful expressive toolset.
 
 Learn more about [Tera](https://keats.github.io/tera/docs/)
 
 
-## Example
+## Simple Example
 Create a `Dockerfile` from a template:
 
 #### Dockerfile.in
