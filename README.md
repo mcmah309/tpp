@@ -71,19 +71,19 @@ CMD ["python app.py"]
 Usage: tpp [OPTIONS] <TEMPLATE_FILE>
 
 Arguments:
-  <TEMPLATE_FILE>  Path to template file to render
+  <TEMPLATE_FILE>  Path to the template file you wish to render
 
 Options:
-  -c, --context-file <CONTEXT_FILE>  The path to the context data. The context needs to be of type json | yaml | toml. If you prefer to pass the data as stdin, use `--stdin`
-      --stdin                        If provided, the context data will be passed using stdin. Note: consider using this and `jq` if you need to merge different context files or parse context files
-  -i, --include <INCLUDE>            Specifies the directories, including their subdirectories, where additional templates can be found. It's necessary when the `<TEMPLATE_FILE>` will import or include other templates. Note: any relative paths specified in the `import` or `include` statements within templates are resolved relative to the directories indicated by `--include`
-      --env                          If set, the current ENV will be used as context, and merged if `--context-file` or `--stdin` are also provided. Merging ENV context happens after unless `--env-first` is set. See also `--fail-on-collision`
-  -e, --env-key <ENV_KEY>            If provided, all ENV data is put inside the key, instead of the root of the context
-      --env-first                    If set, the ENV context will be applied before any other context. This is useful if you want your data to override the ENV
-      --fail-on-collision            If set, the command will fail if ENV and another context conflict
-  -o, --out <OUT>                    Optional output file. If not passed, stdout is used
-      --escape                       Auto-escape rendered content. This is useful for HTML output
-      --debug                        If set, prints debug information to stdout
+  -c, --context-file <CONTEXT_FILE>  Optional: Specify the path to context data in JSON, YAML, or TOML format
+      --stdin                        Optional: Enable passing context data via standard input. Useful for merging different context files or processing context data with tools like `jq`
+  -i, --include <INCLUDE>            Optional: Define directories (and their subdirectories) to search for additional templates referenced in `<TEMPLATE_FILE>`. Necessary for templates that import or include other files. Note: any relative paths specified in the `import` or `include` statements within templates are resolved relative to the directories indicated by `--include`
+      --env                          Optional: Use current environment variables as context data. This can be merged with data from `--context-file` or `--stdin`. Merging occurs after, unless `--env-first` is set. Useful for dynamic template data population
+  -e, --env-key <ENV_KEY>            Optional: Designate a specific key under which all environment variables will be nested in the context data. Requires `--env` to be set
+      --env-first                    Optional: Apply environment variable context before any other context. Allows another context to override the env context. Requires `--env` to be set
+      --fail-on-collision            Optional: Command will terminate if there's a conflict between environment variables and other context data. Requires `--env` to be set
+  -o, --out <OUT>                    Optional: Specify an output file to write the rendered template. If omitted, the output is directed to standard output (stdout)
+      --escape                       Optional: Enable auto-escaping of rendered content, which is particularly useful for HTML
+      --debug                        Optional: Enable debug mode to print detailed debug information to standard output (stdout)
   -h, --help                         Print help
   -V, --version                      Print version
 ```
