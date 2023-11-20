@@ -1,6 +1,70 @@
 # TPP (Tera Pre-Processor)
-tpp (Tera Pre-Processor) is a command line utility for preprocessing files with the tera templating engine. Inspired by
-other pre-processors like cpp and gpp.
+
+[![crates.io](https://img.shields.io/crates/v/tpp.svg)](https://crates.io/crates/tpp)
+[![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
+
+`tpp` (Tera Pre-Processor) is a versatile CLI (Command Line Interface) tool crafted for preprocessing files using the 
+Tera templating engine. Drawing inspiration from renowned pre-processors like [cpp](https://linux.die.net/man/1/cpp) 
+and [gpp](https://github.com/logological/gpp/), `tpp` stands out with its user-friendly command-line interface that 
+efficiently renders templates for diverse applications.
+
+Learn more about [Tera](https://crates.io/crates/tera)
+
+
+## Example
+Create a `Dockerfile` from a template:
+
+#### Dockerfile.in
+```dockerfile
+FROM {{ base_image }}
+
+LABEL maintainer="{{ maintainer }}"
+
+RUN apt-get update && apt-get install -y \
+{{ packages | join(' ') }}
+
+COPY . /app
+WORKDIR /app
+
+ENV PORT {{ port }}
+EXPOSE {{ port }}
+
+CMD ["{{ entrypoint }}"]
+```
+#### context.json
+```json
+{
+  "base_image": "python:3.8-slim",
+  "maintainer": "dev@example.com",
+  "packages": [
+    "build-essential",
+    "libpq-dev"
+  ],
+  "port": 8080,
+  "entrypoint": "python app.py"
+}
+```
+#### Command
+```bash
+tpp Dockerfile.in -c context.json -o Dockerfile
+```
+#### Dockerfile
+```dockerfile
+FROM python:3.8-slim
+
+LABEL maintainer="dev@example.com"
+
+RUN apt-get update && apt-get install -y \
+    build-essential libpq-dev
+
+COPY . /app
+WORKDIR /app
+
+ENV PORT 8080
+EXPOSE 8080
+
+CMD ["python app.py"]
+```
 
 ## Usage
 ```
@@ -22,15 +86,4 @@ Options:
       --debug                        If set, prints debug information to stdout
   -h, --help                         Print help
   -V, --version                      Print version
-```
-
-
-## Examples
-Create a `Containerfile` from a template:
-```bash
-tpp Containerfile.in -o Containerfile
-```
-Slightly more complex example:
-```bash
-tpp Containerfile.in -c context.json -i . -i ../more_templates --env -o Containerfile 
 ```
