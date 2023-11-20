@@ -2,6 +2,7 @@
 description = """
 tpp (Tera Pre-Processor) is a command line utility for preprocessing files with the tera templating engine
 """
+repository = "https://github.com/mcmah309/tpp"
 edition = "2021"
 license = "MIT"
 name = "tpp"
