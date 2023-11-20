@@ -9,14 +9,6 @@ pub struct Opts {
 	#[clap(index = 1)]
 	pub template_file: PathBuf,
 
-	/// Specifies the directory, including its subdirectories,
-	/// where additional templates can be found.
-	/// It's necessary when the `<TEMPLATE_FILE>` will import or include other templates.
-	/// Note that any relative paths specified in the `import` or `include` statements within templates
-	/// are resolved relative to the directories indicated by `--include`.
-	#[clap(short, long, number_of_values = 1)]
-	pub include: Vec<PathBuf>,
-
 	/// The path to the context data. The context needs to be of type json | yaml | toml.
 	/// If you prefer to pass the data as stdin, use `--stdin`.
 	#[clap(short, long,  conflicts_with_all = &["stdin"], required_unless_present_any = &["stdin", "env"])]
@@ -27,21 +19,29 @@ pub struct Opts {
 	#[clap(long, conflicts_with_all = &["context_file"], required_unless_present_any = &["context_file", "env"])]
 	pub stdin: bool,
 
-	/// If set, the current ENV will be merged with the Context. Merging happens after all `context` unless
-	/// `env_first` is set.
+	/// Specifies the directory, including its subdirectories,
+	/// where additional templates can be found.
+	/// It's necessary when the `<TEMPLATE_FILE>` will import or include other templates.
+	/// Note that any relative paths specified in the `import` or `include` statements within templates
+	/// are resolved relative to the directories indicated by `--include`.
+	#[clap(short, long, number_of_values = 1)]
+	pub include: Vec<PathBuf>,
+
+	/// If set, the current ENV will be used as context, and merged if `--context-file` or `--stdin` are also
+	/// provided. Merging ENV context happens after unless `--env-first` is set. See also `--fail-on-collision`.
 	#[clap(long)]
 	pub env: bool,
 
-	/// If provided, Puts all ENV data inside the key, instead of the root of the Context.
+	/// If provided, all ENV data is put inside the key, instead of the root of the context.
 	#[clap(short, long, requires = "env")]
 	pub env_key: Option<String>,
 
-	/// If set, the ENV will be applied before the context. This is useful
+	/// If set, the ENV context will be applied before any other context. This is useful
 	/// if you want your data to override the ENV.
 	#[clap(long, requires = "env")]
 	pub env_first: bool,
 
-	/// If set, the command will fail if ENV and context conflict.
+	/// If set, the command will fail if ENV and another context conflict.
 	#[clap(long, requires = "env")]
 	pub fail_on_collision: bool,
 
@@ -53,7 +53,7 @@ pub struct Opts {
 	#[clap(long)]
 	pub escape: bool,
 
-	/// If set, prints debug information during operations. Useful for resolving issues.
+	/// If set, prints debug information to stdout.
 	#[clap(long)]
 	pub debug: bool,
 }
