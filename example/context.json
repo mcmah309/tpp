@@ -1,0 +1,10 @@
+{
+  "base_image": "python:3.8-slim",
+  "maintainer": "dev@example.com",
+  "packages": [
+    "build-essential",
+    "libpq-dev"
+  ],
+  "port": 8080,
+  "entrypoint": "python app.py"
+}

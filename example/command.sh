@@ -1,0 +1,1 @@
+tpp Dockerfile.in -c context.json -o Dockerfile
