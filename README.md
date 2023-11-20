@@ -66,6 +66,11 @@ EXPOSE 8080
 CMD ["python app.py"]
 ```
 
+## Install
+```bash
+cargo install --git https://github.com/mcmah309/tpp
+```
+
 ## Usage
 ```
 Usage: tpp [OPTIONS] <TEMPLATE_FILE>
