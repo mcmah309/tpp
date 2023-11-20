@@ -1,2 +1,0 @@
-Hello {{ USER }}, this is the Hello template.
-{% include "world.txt" %}
