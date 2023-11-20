@@ -38,25 +38,18 @@ fn main() -> Result<()> {
 
 	let mut tera = Tera::default();
 	for path_buf in &include_paths {
-		if path_buf.is_file() {
-			tera.add_template_file(path_buf, None)
-				.context(format!("Could not add {:?} as a template.", path_buf))?;
-			if opts.debug {
-				println!("Loaded {:?} as template file", path_buf);
-			}
-		} else if path_buf.is_dir() {
+		if path_buf.is_dir() {
 			let glob = format!("{}/**/*", path_buf.to_str()
 				.context(format!("Invalid directory UTF8 string of {:?}.", path_buf))?);
 			let tera_from_dir = Tera::parse(&glob)
 				.context(format!("Could not add templates in dir glob {}.", glob))?;
 			tera.extend(&tera_from_dir)
-				.context(format!("Could not extend tera instance created form templates in dir glob {}.",
-								 glob))?;
+				.context(format!("Could not extend tera instance created from templates in glob {}.", glob))?;
 			if opts.debug {
-				println!("Loaded file from glob {} as template files", glob);
+				println!("Loaded files from glob {} as template files", glob);
 			}
 		} else {
-			bail!(format!("Could not add {:?} to tera, not a file or a directory.", path_buf));
+			bail!(format!("Could not add {:?} to tera, not a directory.", path_buf));
 		}
 	}
 

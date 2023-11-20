@@ -9,8 +9,11 @@ pub struct Opts {
 	#[clap(index = 1)]
 	pub template_file: PathBuf,
 
-	/// Paths from which to include templates. This is needed if the template imports or includes any other templates.
-	/// Can be either a file or a directory. If a directory, subdirectories of the directory are used as well.
+	/// Specifies the directory, including its subdirectories,
+	/// where additional templates can be found.
+	/// It's necessary when the `<TEMPLATE_FILE>` will import or include other templates.
+	/// Note that any relative paths specified in the `import` or `include` statements within templates
+	/// are resolved relative to the directories indicated by `--include`.
 	#[clap(short, long, number_of_values = 1)]
 	pub include: Vec<PathBuf>,
 
