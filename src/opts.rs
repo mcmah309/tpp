@@ -11,18 +11,18 @@ pub struct Opts {
 
 	/// The path to the context data. The context needs to be of type json | yaml | toml.
 	/// If you prefer to pass the data as stdin, use `--stdin`.
-	#[clap(short, long,  conflicts_with_all = &["stdin"], required_unless_present_any = &["stdin", "env"])]
+	#[clap(short, long,  conflicts_with_all = &["stdin"])]
 	pub context_file: Option<PathBuf>,
 
-	/// If provided, the context data will be passed using stdin, rather than `-c`. Note: consider using this and `jq`
+	/// If provided, the context data will be passed using stdin. Note: consider using this and `jq`
 	/// if you need to merge different context files or parse context files.
-	#[clap(long, conflicts_with_all = &["context_file"], required_unless_present_any = &["context_file", "env"])]
+	#[clap(long, conflicts_with_all = &["context_file"])]
 	pub stdin: bool,
 
-	/// Specifies the directory, including its subdirectories,
+	/// Specifies the directories, including their subdirectories,
 	/// where additional templates can be found.
 	/// It's necessary when the `<TEMPLATE_FILE>` will import or include other templates.
-	/// Note that any relative paths specified in the `import` or `include` statements within templates
+	/// Note: any relative paths specified in the `import` or `include` statements within templates
 	/// are resolved relative to the directories indicated by `--include`.
 	#[clap(short, long, number_of_values = 1)]
 	pub include: Vec<PathBuf>,
